@@ -30,12 +30,19 @@ backend.Location :
    name : string
    countryCode : string
    locationId : id
+
+backend.CurrentLocation : Location
 ```
 
 Backend calls
 -------------
 ```java
-getWeatherForDay( location : int, day : int ) : Weather //locationId from searchLocation, 0 for today...
-getGraphData( location : int, day : int ) : GraphData
+getWeatherForDay( day : int ) : Weather // 0 for today...
+getGraphData( day : int ) : GraphData
 searchLocation( name : string ) : List<Location>
+getSavedLocations() : List<Location>
+saveLocation( location : Location )
+setLocation( location : Location )
+getCurrentLocation() : Location
+getDate( day : int ) : string
 ```
