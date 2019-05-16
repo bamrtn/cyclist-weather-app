@@ -16,13 +16,13 @@ backend.Weather :
    sunrise : string           //eg. "6:30"
    sunset : string
 
-backend.Alert :
+backend.Weather.Alert :
    name : string
    detail : string
 
-backend.RainEnum : {UNLIKELY, LIGHT_SHOWERS, HEAVY_SHOWERS, THUNDER}
+backend.Weather.RainEnum : {UNLIKELY, LIGHT_SHOWERS, HEAVY_SHOWERS, THUNDER}
 
-backend.GraphData :
+backend.Weather.GraphData :
    temperature : List<int>
    windspeed : List<int>
 
@@ -30,21 +30,19 @@ backend.Location :
    name : string
    countryCode : string
    locationId : id
-
-backend.CurrentLocation : Location
 ```
 
 Backend calls
 -------------
 ```java
-getWeatherForDay( day : int ) : Weather // 0 for today...
-getGraphData( day : int ) : GraphData
-searchLocation( name : string ) : List<Location>
-getSavedLocations() : List<Location>
-saveLocation( location : Location )
-setLocation( location : Location )
-getCurrentLocation() : Location
-getDate( day : int ) : string
+WeatherApi.getWeatherForDay( day : int ) : Weather // 0 for today...
+WeatherApi.getGraphData( day : int ) : Weather.GraphData
+WeatherApi.searchLocation( name : string ) : List<Location>
+LocationState.getSavedLocations() : List<Location>
+LocationState.saveLocation( location : Location )
+LocationState.setLocation( location : Location )
+LocationState.getCurrentLocation() : Location
+WeatherApi.getDate( day : int ) : string
 ```
 
 Example
@@ -52,7 +50,5 @@ Example
 ```java
 import uk.ac.cam.cl.interactionDesign.group1.backend
 
-backend.Location cam = backend.searchLocation("Cambridge UK");
-
-dfghladsfghadfskladfs
+backend.Location cam = backend.WeatherApi.searchLocation("Cambridge UK");
 ```
