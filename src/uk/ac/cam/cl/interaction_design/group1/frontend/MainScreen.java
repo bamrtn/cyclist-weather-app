@@ -311,7 +311,7 @@ public class MainScreen extends JFrame {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		System.out.println("hello");
+		System.out.println("hello again");
 		MainScreen m = new MainScreen();
 		m.setVisible(true);
 		
