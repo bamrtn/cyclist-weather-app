@@ -8,8 +8,7 @@ public class Background extends JPanel
     public Background()
     {
         // Read the image and place it in the variable img so it can be used in paintComponent
-        img = Toolkit.getDefaultToolkit().createImage("data/background.png");
-
+        img = Toolkit.getDefaultToolkit().createImage("images/AppBackground.png");
 
     }
 

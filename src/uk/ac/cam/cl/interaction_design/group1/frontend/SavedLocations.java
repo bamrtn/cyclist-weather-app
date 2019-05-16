@@ -10,13 +10,11 @@ import uk.ac.cam.cl.interaction_design.group1.backend.*;
 
 
 public class SavedLocations extends JFrame implements ActionListener {
-    JButton addBtn;
-    JFrame search=new Search(this);
-    public static void main(String args[])
-    {
-        JFrame f=new SavedLocations();
-       
-    }
+    private JButton addBtn;
+    private JFrame search = new Search(this);
+    private MainScreen caller;
+    
+    
     public void actionPerformed(ActionEvent e)
     {
         if(e.getSource()==addBtn)
@@ -30,15 +28,12 @@ public class SavedLocations extends JFrame implements ActionListener {
 
         }
     }
-    public SavedLocations() {
-
-
+    public SavedLocations(MainScreen caller) {
         super("saved locations");
-
-
+        this.caller = caller;
+        
         setSize(350, 600);
         setResizable(false);
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel background=new Background();
         setContentPane(background);
@@ -48,12 +43,6 @@ public class SavedLocations extends JFrame implements ActionListener {
         add(makeCenter(), BorderLayout.CENTER);
         add(makeBack(), BorderLayout.SOUTH);
         setVisible(true);
-    }
-
-    private void addBorder(JComponent component, String title) {
-        Border etch = BorderFactory.createLineBorder(Color.white);
-        Border tb = BorderFactory.createTitledBorder(etch, title);
-        component.setBorder(tb);
     }
 
     public JPanel makeTop() {
@@ -74,9 +63,20 @@ public class SavedLocations extends JFrame implements ActionListener {
 
     public JPanel makeBack() {
         JPanel bottom = new JPanel();
+        bottom.setLayout(new GridBagLayout());
+        
         JButton back = new JButton("Back");
         back.setPreferredSize(new Dimension(this.getWidth() / 3, 40));
-        bottom.setLayout(new GridBagLayout());
+        SavedLocations s = this;
+        back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				s.setVisible(false);
+				caller.setVisible(true);
+			}
+		});
+       
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
