@@ -1,2 +1,2 @@
-javac -cp *:. uk/ac/cam/cl/interaction_design/group1/backend/*.java uk/ac/cam/cl/interaction_design/group1/testing/*.java -d ./bin/
-java -cp ./bin/ uk.ac.cam.cl.interaction_design.group1.backend
+javac -cp *:.:./*.jar uk/ac/cam/cl/interaction_design/group1/*.java -d ./bin/
+java -cp ./json-20180813.jar:./bin/ uk.ac.cam.cl.interaction_design.group1.backend

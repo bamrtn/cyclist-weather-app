@@ -10,22 +10,22 @@ Classes
 backend.Weather :
    temperature : int          //celsius
    windspeed : int            //km/h
-   rainLikelyness : RainEnum
+   rainLikelihood : RainEnum
    alerts : List<Alert>
    humidity : int             //percent
    sunrise : string           //eg. "6:30"
    sunset : string
-   
+
 backend.Alert :
    name : string
    detail : string
-   
+
 backend.RainEnum : {UNLIKELY, LIGHT_SHOWERS, HEAVY_SHOWERS, THUNDER}
 
 backend.GraphData :
    temperature : List<int>
    windspeed : List<int>
-   
+
 backend.Location :
    name : string
    countryCode : string
