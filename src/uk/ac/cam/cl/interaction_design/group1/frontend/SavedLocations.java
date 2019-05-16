@@ -3,8 +3,10 @@ package uk.ac.cam.cl.interaction_design.group1.frontend;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import uk.ac.cam.cl.interaction_design.group1.backend.*;
 
 public class SavedLocations extends JFrame implements ActionListener {
     JButton addBtn;
@@ -107,9 +109,13 @@ public class SavedLocations extends JFrame implements ActionListener {
         JPanel locations=new JPanel();
         locations.setLayout(new GridLayout(5,2,25,10));
         locations.setOpaque(false);
-        JButton cal=new JButton("Cambridge");
-        locations.add(cal);
-        center.add(locations,BorderLayout.CENTER);
+        List<Location> savedLocations = LocationState.getSavedLocations();
+        for(Location l : savedLocations)
+        {
+            JButton jb=new JButton(l.name);
+
+
+        }
         return center;
 
 
