@@ -156,33 +156,23 @@ public class MainScreen extends JFrame {
 		lblContainerLabel.setLayout(null);
 		panel.add(lblContainerLabel);
 		
-//		JLabel lblTemperature = new JLabel("26 °C");
 		lblTemperature.setFont(new Font("Serif", Font.PLAIN, 50));
         lblTemperature.setForeground(Color.WHITE);
 		lblTemperature.setBounds((getWidth() - 200) / 2, (lblContainerLabel.getHeight() - 100) / 2, 130, 70);
 		lblContainerLabel.add(lblTemperature);
 		
-		//lblDateAndWind = new JLabel("<html>" + dateString + "<br>Moderate wind (32 km/h) <br>Rain Unlikely</html>");
 		lblDateAndWind.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDateAndWind.setBounds(lblTemperature.getX() + 25, lblTemperature.getY() + lblTemperature.getHeight() - 20, 200, 70);
 		lblDateAndWind.setForeground(Color.WHITE);
 		lblContainerLabel.add(lblDateAndWind, BorderLayout.CENTER);
 		
-		
-		//JFreeChart chart = ChartFactory.createXYLineChart(null, "time", null , createDataset(), PlotOrientation.VERTICAL, false, true, false );
-//		JFreeChart chart = ChartFactory.createTimeSeriesChart(null, "time", null , createDataset(),  false, true, false );
-//		setUpChart(chart);
-//        
-//		chartPanel = new ChartPanel(chart);
+
 		chartPanel.setOpaque(false);
 		chartPanel.setBounds((getWidth() - 330) / 2 - 10, lblContainerLabel.getY() + lblContainerLabel.getHeight() + 20, 330, 200);
 		
 		panel.add(chartPanel);
 		
 		
-		
-//		JLabel lblWarning = new JLabel("Showers in the afternoon!", new ImageIcon(scaledWarningImage), JLabel.LEFT);
-//		lblWarning.setText("<html>Showers in the afternoon<br>Bring a coat!");
 		lblWarning.setForeground(Color.white);
 		lblWarning.setOpaque(true);
 		lblWarning.setBounds((getWidth() - 250) / 2, chartPanel.getY() + chartPanel.getHeight(), 250, 30);
@@ -190,6 +180,7 @@ public class MainScreen extends JFrame {
 		panel.add(lblWarning);
 		
 		update();
+		
 		JButton btnMoreDetails = new JButton("More details >");
 		btnMoreDetails.setBounds(lblWarning.getX() + lblWarning.getWidth() - 150, lblWarning.getY() + lblWarning.getHeight(), 150, 20);
 	
@@ -226,7 +217,7 @@ public class MainScreen extends JFrame {
 	}
 	
 	private XYDataset createDataset() {
-		//TODO: Change this method to get actual weather statistics
+		
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		
 		TimeSeries temperature = new TimeSeries("Temperature (°C)");
@@ -252,6 +243,7 @@ public class MainScreen extends JFrame {
 	}
 	
 	private JPanel createSouthPanel() {
+		
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
 		int buttonWidth = this.getWidth() / 3;
@@ -270,15 +262,8 @@ public class MainScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dateToDisplay.add(Calendar.DAY_OF_MONTH, -1);
-//				SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM");
-//				String dateString = s.format(dateToDisplay.getTime());
-//				lblDateAndWind.setText("<html>" + dateString + "<br>Moderate wind (32 km/h) <br>Rain Unlikely</html>");
-				
+
 				daysAheadOfToday --;
-				
-//				JFreeChart chart = ChartFactory.createTimeSeriesChart(null, "time", null , createDataset(),  false, true, false );
-//				setUpChart(chart);
-//				chartPanel.setChart(chart);
 				
 				if (daysAheadOfToday == 0)
 					btnPreviousDay.setEnabled(false);
