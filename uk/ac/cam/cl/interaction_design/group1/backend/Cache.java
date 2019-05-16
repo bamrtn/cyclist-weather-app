@@ -1,4 +1,4 @@
-package uk.ac.cam.cl.interaction_design.group1._backend;
+package uk.ac.cam.cl.interaction_design.group1.backend;
 
 import org.json.*;
 import java.util.Map;

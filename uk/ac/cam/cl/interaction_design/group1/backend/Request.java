@@ -1,4 +1,4 @@
-package uk.ac.cam.cl.interaction_design.group1._backend;
+package uk.ac.cam.cl.interaction_design.group1.backend;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
