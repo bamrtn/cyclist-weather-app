@@ -36,10 +36,10 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 
+import uk.ac.cam.cl.interaction_design.group1.testing.backendTest;
+
 
 public class MainScreen extends JFrame {
-	
-	
 	
 	private Calendar dateToDisplay = Calendar.getInstance();
 	private int daysAheadOfToday = 0;
@@ -54,7 +54,7 @@ public class MainScreen extends JFrame {
 		
 		dateToDisplay.setTime(new Date());
 		
-		Image backgroundImage = ImageIO.read(new File("images\\AppBackground.png"));
+		Image backgroundImage = ImageIO.read(new File("images/AppBackground.png"));
 		ImagePanel contentPane = new ImagePanel(backgroundImage);
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout());
@@ -63,7 +63,6 @@ public class MainScreen extends JFrame {
 		add(createNorthPanel(), BorderLayout.NORTH);
 		add(createCentralPanel(), BorderLayout.CENTER);
 		add(createSouthPanel(), BorderLayout.SOUTH);
-		
 		
 	}
 	
@@ -127,7 +126,7 @@ public class MainScreen extends JFrame {
 		String dateString = s.format(dateToDisplay.getTime());
 		
 		//Image of sun
-		BufferedImage cloudImage = ImageIO.read(new File("images\\cloud.png"));
+		BufferedImage cloudImage = ImageIO.read(new File("images/cloud.png"));
 		Image scaledSunImage = cloudImage.getScaledInstance(250, 150, Image.SCALE_SMOOTH);
 		
 		//Container label containing sun background
@@ -161,7 +160,7 @@ public class MainScreen extends JFrame {
 		
 		
 		//Warning image for the label
-		BufferedImage warningImg = ImageIO.read(new File("images\\warning.png"));
+		BufferedImage warningImg = ImageIO.read(new File("images/warning.png"));
 		Image scaledWarningImage = warningImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 		
 		
@@ -312,9 +311,9 @@ public class MainScreen extends JFrame {
 	}
 	
 	public static void main(String[] args) throws IOException {
-     	MainScreen m = new MainScreen();
-		m.setVisible(true);
 		
+		MainScreen m = new MainScreen();
+		m.setVisible(true);
 		
 		
 	}

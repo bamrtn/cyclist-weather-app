@@ -2,7 +2,7 @@ package uk.ac.cam. cl.interaction_design.group1.frontend;
 import java.awt.Image;
 import javax.swing.*;
 import java.awt.*;
-class Background extends JPanel
+public class Background extends JPanel
 {
     Image img;
     public Background()

@@ -8,13 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import uk.ac.cam.cl.interaction_design.group1.backend.*;
 
+
 public class SavedLocations extends JFrame implements ActionListener {
     JButton addBtn;
     JFrame search=new Search(this);
     public static void main(String args[])
     {
         JFrame f=new SavedLocations();
-
+       
     }
     public void actionPerformed(ActionEvent e)
     {
@@ -117,15 +118,6 @@ public class SavedLocations extends JFrame implements ActionListener {
 
         }
         return center;
-
-
-
-
-
-
-
-
-
 
     }
 }
