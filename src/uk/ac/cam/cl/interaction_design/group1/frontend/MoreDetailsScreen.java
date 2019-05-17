@@ -1,4 +1,4 @@
-
+package uk.ac.cam. cl.interaction_design.group1.frontend;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -6,7 +6,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MoreDetailsScreen extends JFrame{
     private String location;
@@ -101,10 +102,12 @@ public class MoreDetailsScreen extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 this.setVisible(false);
                 caller.setVisible(true);
-            }
+            }});
 
         return bottom;
+
     }
+
 
     public JPanel makeTitle(){
         JPanel top = new JPanel();
