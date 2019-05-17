@@ -32,7 +32,8 @@ public class SearchLocations extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //Update the buttons to show relevant locations
         if (e.getActionCommand().equals("Search_Button_Pressed")){
-            String searchString = searchField.getText();
+            String searchString = searchField.getText().toLowerCase().replaceAll(" ", "");
+         
             List<Location> predictedLocations = WeatherApi.searchLocation(searchString);
             locationMap = new HashMap<>();
 
@@ -64,16 +65,18 @@ public class SearchLocations extends JFrame implements ActionListener {
         //Take the user back
         else if (e.getActionCommand().equals("Back_Button_Pressed")){
             this.setVisible(false);
+            caller.setLocation(this.getLocation());
             caller.setVisible(true);
         }
 
         //Take the user to the new location
         else{
-            //Todo: Update location in appropriate place and take user to appropriate screen
+            
             String buttonLabel = e.getActionCommand();
             Location location = locationMap.get(buttonLabel);
             try {
 				MainScreen mainScreen = new MainScreen(location);
+				mainScreen.setLocation(this.getLocation());
 				this.setVisible(false);
 				mainScreen.setVisible(true);
 			} catch (IOException e1) {

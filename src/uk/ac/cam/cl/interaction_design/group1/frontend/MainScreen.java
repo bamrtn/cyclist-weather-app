@@ -100,13 +100,14 @@ public class MainScreen extends JFrame {
 		
 		
 		JButton btnSavedLocations = new JButton("<html>Saved<br>Locations</html>");
-		btnSavedLocations.setPreferredSize(new Dimension(componentWidth, 30));
+		btnSavedLocations.setPreferredSize(new Dimension(componentWidth - 10, 30));
 		MainScreen m = this;
 		btnSavedLocations.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SavedLocations s = new SavedLocations(m);
+				s.setLocation(m.getLocation());
 				m.setVisible(false);
 				s.setVisible(true);
 			
@@ -118,9 +119,9 @@ public class MainScreen extends JFrame {
 		c.anchor = GridBagConstraints.LINE_START;
 		northPanel.add(btnSavedLocations, c);
 		
-		
-		JLabel lblLocation = new JLabel(this.location.name + ", " + this.location.countryCode);
-		lblLocation.setPreferredSize(new Dimension(componentWidth, 40));
+		JLabel lblLocation = new JLabel(this.location.name + "," + this.location.countryCode);
+		lblLocation.setFont(new Font("Courier New", Font.PLAIN, 20));
+		lblLocation.setPreferredSize(new Dimension(componentWidth + 60, 40));
 		lblLocation.setForeground(Color.WHITE);
 		c.gridx = 1;
 		c.gridy = 0;
@@ -136,11 +137,12 @@ public class MainScreen extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				m.setVisible(false);
 				SearchLocations searchLocations = new SearchLocations(m);
+				searchLocations.setLocation(m.getLocation());
 				searchLocations.setVisible(true);
 				
 			}
 		});
-		btnSearch.setPreferredSize(new Dimension(componentWidth, 30));
+		btnSearch.setPreferredSize(new Dimension(componentWidth - 10, 30));
 	
 		c.gridx = 2;
 		c.gridy = 0;

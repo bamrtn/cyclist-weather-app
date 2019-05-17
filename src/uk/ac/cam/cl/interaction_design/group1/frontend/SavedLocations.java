@@ -2,6 +2,8 @@ package uk.ac.cam.cl.interaction_design.group1.frontend;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+
+
 import java.awt.*;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -20,9 +22,8 @@ public class SavedLocations extends JFrame implements ActionListener {
         if(e.getSource()==addBtn)
         {
 
-
+        	search.setLocation(this.getLocation());
             search.setVisible(true);
-
             this.setVisible(false);
 
 
@@ -73,6 +74,7 @@ public class SavedLocations extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				s.setVisible(false);
+				caller.setLocation(s.getLocation());
 				caller.setVisible(true);
 			}
 		});
