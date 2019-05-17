@@ -1,10 +1,6 @@
-<<<<<<< HEAD
+
 package uk.ac.cam. cl.interaction_design.group1.frontend;
-=======
 
-package uk.ac.cam.cl.interaction_design.group1.frontend;
-
->>>>>>> master
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -58,7 +54,7 @@ public class MoreDetailsScreen extends JFrame{
         LocationState.setLocation(this.location);
         Weather weather = WeatherApi.getWeatherForDay(day);
         String[][] data = {
-                {"Temperature", weather.temperature + "°C"},
+                {"Temperature", weather.temperature + "ï¿½C"},
                 {"Wind Speed" , weather.windspeed + "km / h"},
                 {"Humidity", weather.humidity + "%"},
                 {"Sunrise", weather.sunrise},
@@ -127,13 +123,7 @@ public class MoreDetailsScreen extends JFrame{
     
         back.addActionListener(new ActionListener() {
 
-<<<<<<< HEAD
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                this.setVisible(false);
-                caller.setVisible(true);
-            }});
-=======
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				m.setVisible(false);
@@ -142,7 +132,7 @@ public class MoreDetailsScreen extends JFrame{
 				
 			}
         });
->>>>>>> master
+
 
         return bottom;
 
