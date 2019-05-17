@@ -41,6 +41,7 @@ public class SearchLocations extends JFrame implements ActionListener {
                 buttonPanel.setVisible(true);
             }
             else{
+            	JOptionPane.showMessageDialog(this, "No cities found with the name " + searchField.getText().toUpperCase());
                 buttonPanel.setVisible(false);
             }
 
