@@ -1,20 +1,34 @@
+<<<<<<< HEAD
 package uk.ac.cam. cl.interaction_design.group1.frontend;
+=======
+
+package uk.ac.cam.cl.interaction_design.group1.frontend;
+
+>>>>>>> master
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import uk.ac.cam.cl.interaction_design.group1.backend.Location;
+import uk.ac.cam.cl.interaction_design.group1.backend.LocationState;
+import uk.ac.cam.cl.interaction_design.group1.backend.Weather;
+import uk.ac.cam.cl.interaction_design.group1.backend.WeatherApi;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MoreDetailsScreen extends JFrame{
-    private String location;
+    private Location location;
     private int day;
     private MainScreen caller;
 
-    public MoreDetailsScreen(int day1, String location1, MainScreen caller1) {
+    public MoreDetailsScreen(int day1, Location location1, MainScreen caller1) {
         super("More Details");
 
         this.location = location1; //set location, day and which screen this was called from as passed in
@@ -40,16 +54,18 @@ public class MoreDetailsScreen extends JFrame{
         JPanel centralPanel = new JPanel();
         centralPanel.setOpaque(false);
         centralPanel.setLayout(null);
-
+        
+        LocationState.setLocation(this.location);
+        Weather weather = WeatherApi.getWeatherForDay(day);
         String[][] data = {
-                {"Temperature", "0"},
-                {"Wind Speed" , "0"},
-                {"Humidity", "0"},
-                {"Sunrise", "00:00"},
-                {"Sunset","00:00"}
+                {"Temperature", weather.temperature + "°C"},
+                {"Wind Speed" , weather.windspeed + "km / h"},
+                {"Humidity", weather.humidity + "%"},
+                {"Sunrise", weather.sunrise},
+                {"Sunset", weather.sunset}
         };
 
-        //TODO: Get data from API and fill in relevant cells
+        
 
         String[] colNames = {"Field", "Value"};   // column names, not displayed but code breaks without!!
 
@@ -83,6 +99,18 @@ public class MoreDetailsScreen extends JFrame{
     public JPanel makeBack() {
         JPanel bottom = new JPanel();
         JButton back = new JButton("Back"); // create button with text "Back"
+        MoreDetailsScreen m = this;
+        back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				caller.setLocation(m.getLocation());
+				m.setVisible(false);
+				caller.setVisible(true);
+				
+				
+			}
+		});
         back.setPreferredSize(new Dimension(this.getWidth() / 3, 40)); // set the size of the button
 
         //set the gridbag layout stuff
@@ -95,14 +123,26 @@ public class MoreDetailsScreen extends JFrame{
 
         bottom.add(back, c); // add the button to the screen using the correct layout
         bottom.setOpaque(false); // make the bottom panel transparent
-
+        
+    
         back.addActionListener(new ActionListener() {
 
+<<<<<<< HEAD
             @Override
             public void actionPerformed(ActionEvent e) {
                 this.setVisible(false);
                 caller.setVisible(true);
             }});
+=======
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				m.setVisible(false);
+				caller.setVisible(true);
+				caller.setLocation(m.getLocation());
+				
+			}
+        });
+>>>>>>> master
 
         return bottom;
 
@@ -122,7 +162,7 @@ public class MoreDetailsScreen extends JFrame{
 
         // create labels containing the text for the titles, centre aligned
         JLabel dateLabel = new JLabel(dateString, JLabel.CENTER);
-        JLabel locationLabel = new JLabel(this.location, JLabel.CENTER);
+        JLabel locationLabel = new JLabel(this.location.name + ", " + this.location.countryCode, JLabel.CENTER);
 
         // set the size of the two title boxes
         dateLabel.setPreferredSize(new Dimension(350, 40));
@@ -140,19 +180,7 @@ public class MoreDetailsScreen extends JFrame{
         return top;
     }
 
-    // for debugging
-    private void addBorder(JComponent component, String title){
-        Border etch = BorderFactory.createLineBorder(Color.white);
-        Border tb = BorderFactory.createTitledBorder(etch, title);
-        component.setBorder(tb);
-    }
-/*
-    public static void main(String[] args) {
-        String location = "Cambridge";
-        int day = 0;
-        MoreDetailsScreen m = new MoreDetailsScreen(day,location);
-        m.setVisible(true);
-    }
-    */
+  
+
 }
 

@@ -195,6 +195,18 @@ public class MainScreen extends JFrame {
 		update();
 		
 		JButton btnMoreDetails = new JButton("More details >");
+		MainScreen m = this;
+		btnMoreDetails.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MoreDetailsScreen moreDetailsScreen = new MoreDetailsScreen(m.daysAheadOfToday, m.location, m);
+				moreDetailsScreen.setLocation(m.getLocation());
+				m.setVisible(false);
+				moreDetailsScreen.setVisible(true);
+				
+			}
+		});
 		btnMoreDetails.setBounds(lblWarning.getX() + lblWarning.getWidth() - 150, lblWarning.getY() + lblWarning.getHeight(), 150, 20);
 	
 		panel.add(btnMoreDetails);
