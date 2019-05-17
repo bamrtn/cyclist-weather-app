@@ -65,10 +65,10 @@ public class MainScreen extends JFrame {
 	private JLabel lblDateAndWind = new JLabel();
 	private ChartPanel chartPanel = new ChartPanel(null);
 	
-	public MainScreen(Location location, int daysAheadOfToday) throws IOException {
+	public MainScreen(Location location) throws IOException {
 		super("Home Screen");
 		this.location = location;
-		this.daysAheadOfToday = daysAheadOfToday;
+		this.daysAheadOfToday = 0;
 		
 		setSize(350, 600);
 		setResizable(false);
@@ -119,7 +119,7 @@ public class MainScreen extends JFrame {
 		northPanel.add(btnSavedLocations, c);
 		
 		
-		JLabel lblLocation = new JLabel("<html>" + this.location.name + "<br>" + this.location.countryCode + "</html>");
+		JLabel lblLocation = new JLabel(this.location.name + ", " + this.location.countryCode);
 		lblLocation.setPreferredSize(new Dimension(componentWidth, 40));
 		lblLocation.setForeground(Color.WHITE);
 		c.gridx = 1;
@@ -130,7 +130,18 @@ public class MainScreen extends JFrame {
 		
 		
 		JButton btnSearch = new JButton("<html>Search<br>Locations</html>");
+		btnSearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				m.setVisible(false);
+				SearchLocations searchLocations = new SearchLocations(m);
+				searchLocations.setVisible(true);
+				
+			}
+		});
 		btnSearch.setPreferredSize(new Dimension(componentWidth, 30));
+	
 		c.gridx = 2;
 		c.gridy = 0;
 		c.weightx = 0;
@@ -360,7 +371,7 @@ public class MainScreen extends JFrame {
 	
 	public static void main(String[] args) throws IOException {
 		
-		MainScreen m = new MainScreen(LocationState.getCurrentLocation(), 0);
+		MainScreen m = new MainScreen(LocationState.getCurrentLocation());
 		m.setVisible(true);
 		
 	}

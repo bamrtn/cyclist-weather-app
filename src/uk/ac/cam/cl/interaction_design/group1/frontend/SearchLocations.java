@@ -1,13 +1,20 @@
-package uk.ac.cam.cl.interaction_design.group1;
+package uk.ac.cam.cl.interaction_design.group1.frontend;
 
 //Todo change all instances of testLocation to backend.Location
 
 import javax.swing.*;
+
+import uk.ac.cam.cl.interaction_design.group1.backend.Location;
+import uk.ac.cam.cl.interaction_design.group1.backend.WeatherApi;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
+
+
 
 public class SearchLocations extends JFrame implements ActionListener {
 
@@ -15,8 +22,10 @@ public class SearchLocations extends JFrame implements ActionListener {
     
     private JPanel buttonPanel;
     private List<JButton> locationButtons = new ArrayList<>();
-    private Set<backend.Location> locations;
-    private Map<String, backend.Location> locationMap;
+    private Set<Location> locations;
+    private Map<String, Location> locationMap;
+    
+    private MainScreen caller;
 
     //Handles button presses and other events in this frame
     @Override
@@ -24,7 +33,7 @@ public class SearchLocations extends JFrame implements ActionListener {
         //Update the buttons to show relevant locations
         if (e.getActionCommand().equals("Search_Button_Pressed")){
             String searchString = searchField.getText();
-            List<backend.Location> predictedLocations = this.locationsLikeText(searchString);
+            List<Location> predictedLocations = WeatherApi.searchLocation(searchString);
             locationMap = new HashMap<>();
 
             if (predictedLocations.size() > 0){
@@ -39,8 +48,8 @@ public class SearchLocations extends JFrame implements ActionListener {
             }
 
             for (int i = 0; i < predictedLocations.size(); i++){
-                backend.Location location = predictedLocations.get(i);
-                String buttonLabel = location.getName() + ", " + location.getContryCode();
+                Location location = predictedLocations.get(i);
+                String buttonLabel = location.name + ", " + location.countryCode;
                 locationMap.put(buttonLabel, location);
                 locationButtons.get(i).setText(buttonLabel);
                 locationButtons.get(i).setVisible(true);
@@ -54,34 +63,29 @@ public class SearchLocations extends JFrame implements ActionListener {
 
         //Take the user back
         else if (e.getActionCommand().equals("Back_Button_Pressed")){
-            //Todo: Take user back to appropriate screen
-            System.out.println("Back");
+            this.setVisible(false);
+            caller.setVisible(true);
         }
 
         //Take the user to the new location
         else{
             //Todo: Update location in appropriate place and take user to appropriate screen
             String buttonLabel = e.getActionCommand();
-            backend.Location location = locationMap.get(buttonLabel);
-            System.out.println(location);
-            System.out.println(buttonLabel);
-            System.out.println();
+            Location location = locationMap.get(buttonLabel);
+            try {
+				MainScreen mainScreen = new MainScreen(location);
+				this.setVisible(false);
+				mainScreen.setVisible(true);
+			} catch (IOException e1) {
+				
+				e1.printStackTrace();
+			}
+            
+            
         }
     }
 
-    //Return some subset of our location set, that match s, in the form of a list.
-    private List<backend.Location> locationsLikeText(String s){
-        List<backend.Location> likelyLocations = new ArrayList<>();
-        s = s.toLowerCase();
-
-        for(backend.Location l: locations){
-            if (l.getName().toLowerCase().contains(s)){
-                likelyLocations.add(l);
-            }
-        }
-        return likelyLocations;
-    }
-
+   
     //Make the panel that houses the text input and button for searching
     private JPanel makeSearch(){
         JPanel top = new JPanel();
@@ -166,9 +170,9 @@ public class SearchLocations extends JFrame implements ActionListener {
 
     //Primary constructor. Takes name of the frame and the set of locations for searching.
     //Calls the panels and assembles them into the frame
-    public SearchLocations(String name, Set<backend.Location> locations){
-        super(name);
-        this.locations = locations;
+    public SearchLocations(MainScreen caller){
+        super("Search Locations");
+        this.caller = caller;
         this.setSize(350,600);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -187,35 +191,5 @@ public class SearchLocations extends JFrame implements ActionListener {
         add(buttonPanel, BorderLayout.CENTER);
     }
 
-    //Todo: Delete this when code properly merged
-    //Generate some fake location data to test with
-    private static Set<backend.Location> generateFakeLocations(){
-        Set<backend.Location> fakeLocations = new HashSet<>();
-        fakeLocations.add(new backend.Location("London", "UK", 1));
-        fakeLocations.add(new backend.Location("Cambridge", "UK", 2));
-        fakeLocations.add(new backend.Location("Weymouth", "UK", 3));
-        fakeLocations.add(new backend.Location("Cambridge", "US", 4));
-        fakeLocations.add(new backend.Location("Frankfurt", "DE", 5));
-        fakeLocations.add(new backend.Location("Paris", "FR", 6));
-        fakeLocations.add(new backend.Location("Los Angeles", "US", 7));
-        fakeLocations.add(new backend.Location("Oslo", "NO", 8));
-        fakeLocations.add(new backend.Location("Stockholm", "SE", 9));
-        fakeLocations.add(new backend.Location("Mexico City", "MX", 10));
-        fakeLocations.add(new backend.Location("Nairobi", "KE", 11));
-        fakeLocations.add(new backend.Location("Yeovil", "UK", 12));
-        fakeLocations.add(new backend.Location("Liverpool", "UK", 13));
-        fakeLocations.add(new backend.Location("Manchester", "UK", 14));
-        fakeLocations.add(new backend.Location("Bristol", "UK", 15));
-        fakeLocations.add(new backend.Location("Dorchester", "UK", 16));
-
-        return fakeLocations;
-    }
-
-    //Main method for testing
-    public static void main(String[] args){
-        Set<backend.Location> ls = generateFakeLocations();
-        SearchLocations frame = new SearchLocations("Weather App Search", ls);
-        frame.setVisible(true);
-    }
 
 }
