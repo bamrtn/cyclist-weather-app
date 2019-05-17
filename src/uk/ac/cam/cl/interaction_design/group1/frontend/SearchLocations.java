@@ -97,7 +97,7 @@ public class SearchLocations extends JFrame implements ActionListener {
         searchField.setPreferredSize(new Dimension(150,50));
 
         JButton searchButton = new JButton();
-        Image searchIcon = Toolkit.getDefaultToolkit().createImage("data/searchIcon.png");
+        Image searchIcon = Toolkit.getDefaultToolkit().createImage("images/searchIcon.png");
         searchButton.setIcon(new ImageIcon(searchIcon));
         searchButton.addActionListener(this);
         searchButton.setActionCommand("Search_Button_Pressed");
