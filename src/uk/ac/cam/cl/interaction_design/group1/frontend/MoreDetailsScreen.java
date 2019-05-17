@@ -54,7 +54,7 @@ public class MoreDetailsScreen extends JFrame{
         LocationState.setLocation(this.location);
         Weather weather = WeatherApi.getWeatherForDay(day);
         String[][] data = {
-                {"Temperature", weather.temperature + "ï¿½C"},
+                {"Temperature", weather.temperature + "°C"},
                 {"Wind Speed" , weather.windspeed + "km / h"},
                 {"Humidity", weather.humidity + "%"},
                 {"Sunrise", weather.sunrise},

@@ -348,7 +348,7 @@ public class MainScreen extends JFrame {
 		if (windSpeed < 10) {
 			windIntensity = "Very little wind";
 		} else if (windSpeed >= 10 && windSpeed <= 20) {
-			windIntensity = "Moderade wind";
+			windIntensity = "Moderate wind";
 		} else {
 			windIntensity = "Strong wind";
 		}
