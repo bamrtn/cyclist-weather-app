@@ -100,13 +100,14 @@ public class MainScreen extends JFrame {
 		
 		
 		JButton btnSavedLocations = new JButton("<html>Saved<br>Locations</html>");
-		btnSavedLocations.setPreferredSize(new Dimension(componentWidth - 10, 30));
+		btnSavedLocations.setPreferredSize(new Dimension(componentWidth , 40));
 		MainScreen m = this;
 		btnSavedLocations.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SavedLocations s = new SavedLocations(m);
+				SavedLocations s = new SavedLocations();
+				s.setCaller(m);
 				s.setLocation(m.getLocation());
 				m.setVisible(false);
 				s.setVisible(true);
@@ -142,7 +143,7 @@ public class MainScreen extends JFrame {
 				
 			}
 		});
-		btnSearch.setPreferredSize(new Dimension(componentWidth - 10, 30));
+		btnSearch.setPreferredSize(new Dimension(componentWidth - 10, 40));
 	
 		c.gridx = 2;
 		c.gridy = 0;
@@ -221,7 +222,7 @@ public class MainScreen extends JFrame {
 		plot.getRenderer().setSeriesPaint(1, Color.blue);
 		LegendTitle lt = new LegendTitle(plot);
 		lt.setItemFont(new Font("Dialog", Font.PLAIN, 9));
-		lt.setBackgroundPaint(new Color(200, 200, 255, 100));
+		lt.setBackgroundPaint(new Color(200, 200, 200, 0));
 		lt.setFrame(new BlockBorder(Color.white));
 		lt.setPosition(RectangleEdge.BOTTOM);
 		XYTitleAnnotation ta = new XYTitleAnnotation(0.98, 0.02, lt,RectangleAnchor.BOTTOM_RIGHT);
