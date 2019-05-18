@@ -16,6 +16,11 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -37,6 +42,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleEdge;
 
+
 import uk.ac.cam.cl.interaction_design.group1.backend.Location;
 import uk.ac.cam.cl.interaction_design.group1.backend.LocationState;
 import uk.ac.cam.cl.interaction_design.group1.backend.Weather;
@@ -54,10 +60,8 @@ public class MainScreen extends JFrame {
 	private Location location;
 	
 	//Images
-	private BufferedImage cloudImage = ImageIO.read(new File("images/cloud.png"));
-	private Image scaledCloudImage = cloudImage.getScaledInstance(250, 150, Image.SCALE_SMOOTH);
-	private BufferedImage warningImg = ImageIO.read(new File("images/warning.png"));
-	private Image scaledWarningImage = warningImg.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+	private Image scaledCloudImage = getScaledImage("images/cloud.png", 250, 150);
+	private Image scaledWarningImage = getScaledImage("images/warning.png", 20, 20);
 	
 	//Components that are dynamically updated
 	private JLabel lblWarning = new JLabel("Showers in the afternoon!", new ImageIcon(scaledWarningImage), JLabel.LEFT);
@@ -65,7 +69,7 @@ public class MainScreen extends JFrame {
 	private JLabel lblDateAndWind = new JLabel();
 	private ChartPanel chartPanel = new ChartPanel(null);
 	
-	public MainScreen(Location location) throws IOException {
+	public MainScreen(Location location) throws IOException{
 		super("Home Screen");
 		this.location = location;
 		this.daysAheadOfToday = 0;
@@ -83,14 +87,23 @@ public class MainScreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout());
 		
-		add(createNorthPanel(), BorderLayout.NORTH);
+		try {
+			add(createNorthPanel(), BorderLayout.NORTH);
+		} catch (BadLocationException e) {
+			
+			e.printStackTrace();
+		}
 		add(createCentralPanel(), BorderLayout.CENTER);
 		add(createSouthPanel(), BorderLayout.SOUTH);
 		
 	}
 	
+	private Image getScaledImage(String filepath, int width, int height) throws IOException {
+		return ImageIO.read(new File(filepath)).getScaledInstance(width, height, Image.SCALE_SMOOTH);
+	}
 	
-	private JPanel createNorthPanel() {
+	
+	private JPanel createNorthPanel() throws BadLocationException {
 		int componentWidth = this.getWidth() / 4;
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridBagLayout());
@@ -100,7 +113,7 @@ public class MainScreen extends JFrame {
 		
 		
 		JButton btnSavedLocations = new JButton("<html>Saved<br>Locations</html>");
-		btnSavedLocations.setPreferredSize(new Dimension(componentWidth - 10, 30));
+		btnSavedLocations.setPreferredSize(new Dimension(componentWidth, 40));
 		MainScreen m = this;
 		btnSavedLocations.addActionListener(new ActionListener() {
 			
@@ -119,13 +132,14 @@ public class MainScreen extends JFrame {
 		c.anchor = GridBagConstraints.LINE_START;
 		northPanel.add(btnSavedLocations, c);
 		
-		JLabel lblLocation = new JLabel(this.location.name + "," + this.location.countryCode);
+		JLabel lblLocation = new JLabel("<html>" + this.location.name + "," + this.location.countryCode + "</html>");
+		lblLocation.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLocation.setFont(new Font("Courier New", Font.PLAIN, 20));
-		lblLocation.setPreferredSize(new Dimension(componentWidth + 60, 40));
+		lblLocation.setPreferredSize(new Dimension(componentWidth + 70, 50));
+		lblLocation.setOpaque(false);
 		lblLocation.setForeground(Color.WHITE);
 		c.gridx = 1;
 		c.gridy = 0;
-		c.weightx = 0.5;
 		c.anchor = GridBagConstraints.CENTER;
 		northPanel.add(lblLocation, c);
 		
@@ -142,16 +156,22 @@ public class MainScreen extends JFrame {
 				
 			}
 		});
-		btnSearch.setPreferredSize(new Dimension(componentWidth - 10, 30));
+		btnSearch.setPreferredSize(new Dimension(componentWidth, 40));
 	
 		c.gridx = 2;
 		c.gridy = 0;
-		c.weightx = 0;
 		c.anchor = GridBagConstraints.LINE_END;
 		northPanel.add(btnSearch, c);
 		
 		return northPanel;
 	}
+	
+	private void addBorder(JComponent component, String title) {
+		Border etch = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+		Border tb = BorderFactory.createTitledBorder(etch, title);
+		component.setBorder(tb);
+	}
+
 		
 	private JPanel createCentralPanel() throws IOException {
 		JPanel panel = new JPanel();
