@@ -50,18 +50,18 @@ public class MoreDetailsScreen extends JFrame{
         JPanel centralPanel = new JPanel();
         centralPanel.setOpaque(false);
         centralPanel.setLayout(null);
-        
+
         LocationState.setLocation(this.location);
         Weather weather = WeatherApi.getWeatherForDay(day);
         String[][] data = {
-                {"Temperature", weather.temperature + "°C"},
+                {"Temperature", weather.temperature + "Â°C"},
                 {"Wind Speed" , weather.windspeed + "km / h"},
                 {"Humidity", weather.humidity + "%"},
                 {"Sunrise", weather.sunrise},
                 {"Sunset", weather.sunset}
         };
 
-        
+
 
         String[] colNames = {"Field", "Value"};   // column names, not displayed but code breaks without!!
 
@@ -97,14 +97,14 @@ public class MoreDetailsScreen extends JFrame{
         JButton back = new JButton("Back"); // create button with text "Back"
         MoreDetailsScreen m = this;
         back.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				caller.setLocation(m.getLocation());
 				m.setVisible(false);
 				caller.setVisible(true);
-				
-				
+
+
 			}
 		});
         back.setPreferredSize(new Dimension(this.getWidth() / 3, 40)); // set the size of the button
@@ -119,8 +119,8 @@ public class MoreDetailsScreen extends JFrame{
 
         bottom.add(back, c); // add the button to the screen using the correct layout
         bottom.setOpaque(false); // make the bottom panel transparent
-        
-    
+
+
         back.addActionListener(new ActionListener() {
 
 
@@ -129,7 +129,7 @@ public class MoreDetailsScreen extends JFrame{
 				m.setVisible(false);
 				caller.setVisible(true);
 				caller.setLocation(m.getLocation());
-				
+
 			}
         });
 
@@ -170,7 +170,6 @@ public class MoreDetailsScreen extends JFrame{
         return top;
     }
 
-  
+
 
 }
-
