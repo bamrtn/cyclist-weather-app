@@ -36,6 +36,7 @@ public class LocationState{
 
   public static Location getCurrentLocation(){
     LocationState ls = getLocationState();
+    System.out.println(ls.currentLocation);
     return ls.currentLocation;
   }
 

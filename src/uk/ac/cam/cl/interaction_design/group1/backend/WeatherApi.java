@@ -47,6 +47,7 @@ public class WeatherApi {
         put("metric","true");
       }}
     );
+    System.out.println(responseString);
     JSONObject forecast = (JSONObject) ((JSONArray) (new JSONObject(responseString)).get("DailyForecasts")).get(day);
     Weather result = new Weather();
 
