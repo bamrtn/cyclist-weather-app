@@ -190,7 +190,7 @@ public class MainScreen extends JFrame {
 		lblContainerLabel.add(lblTemperature);
 
 		lblDateAndWind.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDateAndWind.setBounds(lblTemperature.getX() + 25, lblTemperature.getY() + lblTemperature.getHeight() - 20, 200, 70);
+		lblDateAndWind.setBounds(lblTemperature.getX(), lblTemperature.getY() + lblTemperature.getHeight() - 20, 200, 70);
 		lblDateAndWind.setForeground(Color.WHITE);
 		lblContainerLabel.add(lblDateAndWind, BorderLayout.CENTER);
 
@@ -260,7 +260,7 @@ public class MainScreen extends JFrame {
 
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 
-		TimeSeries temperature = new TimeSeries("Temperature (Â°C)");
+		TimeSeries temperature = new TimeSeries("Temperature (°C)");
 		TimeSeries windSpeed = new TimeSeries("Wind speed (km / h)");
 
 		GraphData graphData = WeatherApi.getGraphData(daysAheadOfToday);
@@ -353,7 +353,7 @@ public class MainScreen extends JFrame {
 		LocationState.setLocation(location);
 		Weather requieredWeatherForDay = WeatherApi.getWeatherForDay(daysAheadOfToday);
 
-		lblTemperature.setText(requieredWeatherForDay.temperature + "Â°C");
+		lblTemperature.setText(requieredWeatherForDay.temperature + "°C");
 
 		SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM");
 		String dateString = s.format(dateToDisplay.getTime());
