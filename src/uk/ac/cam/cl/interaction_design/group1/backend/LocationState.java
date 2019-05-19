@@ -54,6 +54,21 @@ public class LocationState{
     }catch(Exception e){}
   }
 
+  public static void removeSavedLocation(Location l){
+    LocationState ls = getLocationState();
+    ls.savedLocations.remove(l);
+
+    JSONArray toSave = new JSONArray();
+    for(Location i : ls.savedLocations){
+      toSave.put(i.toJson());
+    }
+    try{
+      PrintWriter out = new PrintWriter("cache/savedLocations.json");
+      out.println(toSave.toString());
+      out.close();
+    }catch(Exception e){}
+  }
+
   public static void setLocation(Location l){
     LocationState ls = getLocationState();
     ls.currentLocation = l;

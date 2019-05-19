@@ -9,9 +9,10 @@ import java.util.Map;
 
 public class Request {
 
-  private static final String ApiKey = "?apikey=[DELTE THIS FOR LIVE REQUESTS]Le6a2BtymiMzZ2ZB9Sk8g7AWY2AF8ARK";
+  private static final String ApiKey = "?apikey=Le6a2BtymiMzZ2ZB9Sk8g7AWY2AF8ARK";
 
   private static String getUrl(String url){
+
     Cache cache = Cache.getCache();
     if (cache.containsKey(url)){
       //System.out.println("Cached!");
@@ -19,6 +20,7 @@ public class Request {
     }
 
     String response = "";
+              if (true) return ""; // COMMENT THIS OUT FOR LIVE REQESTS
     try{
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();

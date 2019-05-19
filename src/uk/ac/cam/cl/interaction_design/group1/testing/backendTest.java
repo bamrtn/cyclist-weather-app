@@ -9,7 +9,7 @@ public class backendTest {
 
   public static void main(String[] args){
 
-    System.out.println("Searching for text 'Cambridge': ");
+    /*System.out.println("Searching for text 'Cambridge': ");
     List<Location> search = WeatherApi.searchLocation("Cambridge");
     System.out.println(search);
 
@@ -27,11 +27,11 @@ public class backendTest {
     Location cam = new Location();
     cam.name = "Cambridge";
     cam.countryCode = "GB";
-    cam.locationId = "2530522";
+    cam.locationId = "2530522";*/
 
     //Print weather, graph data and date for 4 days from now
-    System.out.println(WeatherApi.getWeatherForDay(4));
-    System.out.println(WeatherApi.getGraphData(4));
-    System.out.println(WeatherApi.getDate(4));
+    System.out.println(WeatherApi.getWeatherForDay(0));
+    System.out.println(WeatherApi.getGraphData(0));
+    System.out.println(WeatherApi.getDate(0));
 	}
 }
