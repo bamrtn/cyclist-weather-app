@@ -114,7 +114,8 @@ public class MainScreen extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SavedLocations s = new SavedLocations(m);
+				SavedLocations s = new SavedLocations();
+				s.setCaller(m);
 				s.setLocation(m.getLocation());
 				m.setVisible(false);
 				s.setVisible(true);
