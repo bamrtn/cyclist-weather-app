@@ -145,6 +145,7 @@ public class SavedLocations extends JFrame implements ActionListener {
                         }
                         else {
                             del=0;
+                            LocationState.removeSavedLocation(l);
                             locations.remove(jb);
                             locations.repaint();
                         }
