@@ -87,12 +87,7 @@ public class MainScreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout());
 		
-		try {
-			add(createNorthPanel(), BorderLayout.NORTH);
-		} catch (BadLocationException e) {
-			
-			e.printStackTrace();
-		}
+		add(createNorthPanel(), BorderLayout.NORTH);
 		add(createCentralPanel(), BorderLayout.CENTER);
 		add(createSouthPanel(), BorderLayout.SOUTH);
 		
@@ -103,7 +98,7 @@ public class MainScreen extends JFrame {
 	}
 	
 	
-	private JPanel createNorthPanel() throws BadLocationException {
+	private JPanel createNorthPanel() {
 		int componentWidth = this.getWidth() / 4;
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridBagLayout());
@@ -391,6 +386,7 @@ public class MainScreen extends JFrame {
 		if (alerts.size() == 0) {
 			lblWarning.setText("No alerts for today");
 		} else if (alerts.size() == 1)  {
+			
 			lblWarning.setText(alerts.get(0).detail);
 			
 		} else {
@@ -400,7 +396,6 @@ public class MainScreen extends JFrame {
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(null, "time", null , createDataset(),  false, true, false );
 		setUpChart(chart);
 		chartPanel.setChart(chart);
-		
 	}
 	
 	public static void main(String[] args) throws IOException {
