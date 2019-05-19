@@ -12,6 +12,7 @@ public class Request {
   private static final String ApiKey = "?apikey=Le6a2BtymiMzZ2ZB9Sk8g7AWY2AF8ARK";
 
   private static String getUrl(String url){
+
     Cache cache = Cache.getCache();
     if (cache.containsKey(url)){
       //System.out.println("Cached!");
