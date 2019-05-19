@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Request {
 
-  private static final String ApiKey = "?apikey=Le6a2BtymiMzZ2ZB9Sk8g7AWY2AF8ARK";
+  private static final String ApiKey = "?apikey=[DELTE THIS FOR LIVE REQUESTS]Le6a2BtymiMzZ2ZB9Sk8g7AWY2AF8ARK";
 
   private static String getUrl(String url){
     Cache cache = Cache.getCache();

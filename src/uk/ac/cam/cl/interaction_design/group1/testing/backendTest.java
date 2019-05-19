@@ -14,7 +14,7 @@ public class backendTest {
     System.out.println(search);
 
     //Save the second result
-    LocationState.saveLocation(search.get(1));
+    LocationState.saveLocation(search.get(0));
 
     //Set the first result as current location
     LocationState.setLocation(search.get(0));
