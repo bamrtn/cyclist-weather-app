@@ -60,13 +60,21 @@ public class MainScreen extends JFrame {
 	private Location location;
 
 	//Images
-	private Image scaledCloudImage = getScaledImage("images/cloud.png", 250, 150);
-	private Image scaledWarningImage = getScaledImage("images/warning.png", 20, 20);
+	private Image lightShowersImage = getScaledImage("images/LIGHT_SHOWERS.png", 250, 150);
+	private Image heavyShowersImage = getScaledImage("images/HEAVY_SHOWERS.png", 250, 150);
+	private Image thunderImage = getScaledImage("images/THUNDER.png", 250, 150);
+	private Image unlikelyImage = getScaledImage("images/UNLIKELY.png", 250, 150);
+	
+	private Image alertImage = getScaledImage("images/alert.png", 20, 20);
+	private Image noAlertImage = getScaledImage("images/no_alert.png", 20,20);
+	
+	
 
 	//Components that are dynamically updated
-	private JLabel lblWarning = new JLabel("Showers in the afternoon!", new ImageIcon(scaledWarningImage), JLabel.LEFT);
+	private JLabel lblWarning = new JLabel("Showers in the afternoon!", new ImageIcon(alertImage), JLabel.LEFT);
 	private JLabel lblTemperature = new JLabel();
 	private JLabel lblDateAndWind = new JLabel();
+	private JLabel lblContainerLabel = new JLabel(new ImageIcon(lightShowersImage));
 	private ChartPanel chartPanel = new ChartPanel(null);
 
 	public MainScreen(Location location) throws IOException{
@@ -179,8 +187,7 @@ public class MainScreen extends JFrame {
 		String dateString = s.format(dateToDisplay.getTime());
 
 
-		//Container label containing sun background
-		JLabel lblContainerLabel = new JLabel(new ImageIcon(scaledCloudImage));
+		//Container label containing background
 		lblContainerLabel.setBounds((getWidth() - 250) / 2, 20, 250, 150);
 		lblContainerLabel.setLayout(null);
 		panel.add(lblContainerLabel);
@@ -373,24 +380,30 @@ public class MainScreen extends JFrame {
 		String rainMesage = "";
 		if (rainEnum == RainEnum.HEAVY_SHOWERS) {
 			rainMesage = "Heavy showers likely today";
+			lblContainerLabel.setIcon(new ImageIcon(heavyShowersImage));
 		} else if (rainEnum == RainEnum.LIGHT_SHOWERS) {
 			rainMesage = "Light showers likely today";
+			lblContainerLabel.setIcon(new ImageIcon(lightShowersImage));
 		} else if (rainEnum == RainEnum.THUNDER) {
 			rainMesage = "THUNDER likely today";
+			lblContainerLabel.setIcon(new ImageIcon(thunderImage));
 		} else {
 			rainMesage = "Rain unlikely today";
+			lblContainerLabel.setIcon(new ImageIcon(unlikelyImage));
 		}
 
 		lblDateAndWind.setText("<html>" + dateString + "<br>" + windIntensity + " (" + windSpeed + " km/h) <br>" + rainMesage + "</html>");
 
 		List<Alert> alerts = requieredWeatherForDay.alerts;
 		if (alerts.size() == 0) {
+			lblWarning.setIcon(new ImageIcon(noAlertImage));
 			lblWarning.setText("No alerts for today");
 		} else if (alerts.size() == 1)  {
-
+			lblWarning.setIcon(new ImageIcon(alertImage));
 			lblWarning.setText(alerts.get(0).detail);
 
 		} else {
+			lblWarning.setIcon(new ImageIcon(alertImage));
 			lblWarning.setText("<html>" + alerts.get(0).detail + "<br>" + alerts.get(1).detail);
 		}
 
