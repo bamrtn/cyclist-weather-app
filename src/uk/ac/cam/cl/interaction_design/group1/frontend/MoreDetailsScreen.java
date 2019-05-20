@@ -10,6 +10,7 @@ import uk.ac.cam.cl.interaction_design.group1.backend.Location;
 import uk.ac.cam.cl.interaction_design.group1.backend.LocationState;
 import uk.ac.cam.cl.interaction_design.group1.backend.Weather;
 import uk.ac.cam.cl.interaction_design.group1.backend.WeatherApi;
+import uk.ac.cam.cl.interaction_design.group1.backend.Weather.GraphData;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -50,13 +51,23 @@ public class MoreDetailsScreen extends JFrame{
         JPanel centralPanel = new JPanel();
         centralPanel.setOpaque(false);
         centralPanel.setLayout(null);
-
-        LocationState.setLocation(this.location);
         Weather weather = WeatherApi.getWeatherForDay(day);
+       
+        
+        LocationState.setLocation(this.location);
+        
+        String hoursOfPrecipitation = "";
+        for (String s : WeatherApi.getGraphData(day).rainTimes) {
+        	hoursOfPrecipitation += s + ", ";
+        }
+        
+        hoursOfPrecipitation = hoursOfPrecipitation.substring(0, hoursOfPrecipitation.length() - 2);
+        
+       
         String[][] data = {
                 {"Temperature", weather.temperature + "°C"},
                 {"Wind Speed" , weather.windspeed + "km / h"},
-                {"Hours of precipitation", Integer.toString(weather.humidity)},
+                {"Precipitation times", hoursOfPrecipitation},
                 {"Sunrise", weather.sunrise},
                 {"Sunset", weather.sunset}
         };
