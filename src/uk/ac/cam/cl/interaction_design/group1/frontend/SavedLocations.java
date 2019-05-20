@@ -16,7 +16,7 @@ public class SavedLocations extends JFrame implements ActionListener {
     private JButton addBtn;
     MainScreen caller;
     int del=0;
-
+    JLabel popUp;
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addBtn) {
@@ -109,10 +109,14 @@ public class SavedLocations extends JFrame implements ActionListener {
         addBtn = new CircleButton("+");
         addBtn.addActionListener(this::actionPerformed);
         CircleDelete delete=new CircleDelete("-") ;
+        SavedLocations s=this;
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 del=1;
+                JOptionPane.showMessageDialog(s,
+                        "Click on location to delete!");
+
 
 
             }
