@@ -24,14 +24,17 @@ public class Weather{
   public static class GraphData{
     public List<Integer> temperature;
     public List<Integer> windspeed;
+    public List<String> rainTimes;
 
     public GraphData(){
       temperature = new ArrayList<Integer>();
       windspeed = new ArrayList<Integer>();
+      rainTimes = new ArrayList<String>();
+
     }
 
     public String toString(){
-      return temperature.toString() +"\n"+ windspeed.toString();
+      return temperature.toString() +"\n"+ windspeed.toString() +"\n"+ rainTimes.toString();
     }
   }
 

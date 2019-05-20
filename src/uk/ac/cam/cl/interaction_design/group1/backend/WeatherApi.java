@@ -85,11 +85,18 @@ public class WeatherApi {
 
   public static Weather.GraphData getGraphData(int day){
     Weather w = getWeatherForDay(day);
-    Random rand = new Random(w.temperature+w.windspeed+w.humidity);
+    Random rand = new Random(w.temperature*1000+w.windspeed*2000+w.humidity*3000);
     Weather.GraphData result = new Weather.GraphData();
 
     for (int i = 0; i<24; i++) result.temperature.add(w.temperature-5+rand.nextInt(10));
     for (int i = 0; i<24; i++) result.windspeed.add(w.windspeed-7+rand.nextInt(14));
+    int rainNum = rand.nextInt(3) + w.humidity/5;
+    if (w.humidity == 0) rainNum = 0;
+    for (int i = 0; i< rainNum; i++) {
+      result.rainTimes.add(Integer.toString(rand.nextInt(24))+":"+rand.nextInt(60));
+    }
+
+    System.out.println(result.rainTimes);
 
     return result;
   }
