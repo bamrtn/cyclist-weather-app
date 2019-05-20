@@ -70,6 +70,10 @@ public class LocationState{
   }
 
   public static void setLocation(Location l){
+    if (l.locationId.equals("")){
+      System.out.println("ERROR: Empty location set!");
+      return;
+    }
     LocationState ls = getLocationState();
     ls.currentLocation = l;
     try{

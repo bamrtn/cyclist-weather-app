@@ -96,7 +96,7 @@ public class WeatherApi {
       result.rainTimes.add(Integer.toString(rand.nextInt(24))+":"+rand.nextInt(60));
     }
 
-    System.out.println(result.rainTimes);
+    //System.out.println(result.rainTimes);
 
     return result;
   }
