@@ -63,7 +63,7 @@ public class MainScreen extends JFrame {
 	private Image lightShowersImage = getScaledImage("images/LIGHT_SHOWERS.png", 250, 150);
 	private Image heavyShowersImage = getScaledImage("images/HEAVY_SHOWERS.png", 250, 150);
 	private Image thunderImage = getScaledImage("images/THUNDER.png", 250, 150);
-	private Image unlikelyImage = getScaledImage("images/UNLIKELY.png", 250, 150);
+	private Image unlikelyImage = getScaledImage("images/UNLIKELY.png", 180, 150);
 	
 	private Image alertImage = getScaledImage("images/alert.png", 20, 20);
 	private Image noAlertImage = getScaledImage("images/no_alert.png", 20,20);
@@ -114,7 +114,7 @@ public class MainScreen extends JFrame {
 
 		GridBagConstraints c = new GridBagConstraints();
 
-
+		//Adds saved locations button to top left
 		JButton btnSavedLocations = new JButton("<html>Saved<br>Locations</html>");
 		btnSavedLocations.setPreferredSize(new Dimension(componentWidth, 40));
 		MainScreen m = this;
@@ -135,7 +135,8 @@ public class MainScreen extends JFrame {
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.LINE_START;
 		northPanel.add(btnSavedLocations, c);
-
+		
+		//Label that displays location stored in this object
 		JLabel lblLocation = new JLabel("<html>" + this.location.name + "," + this.location.countryCode + "</html>");
 		lblLocation.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLocation.setFont(new Font("Courier New", Font.PLAIN, 20));
@@ -147,7 +148,7 @@ public class MainScreen extends JFrame {
 		c.anchor = GridBagConstraints.CENTER;
 		northPanel.add(lblLocation, c);
 
-
+		//Button for searching locations
 		JButton btnSearch = new JButton("<html>Search<br>Locations</html>");
 		btnSearch.addActionListener(new ActionListener() {
 
@@ -170,13 +171,7 @@ public class MainScreen extends JFrame {
 		return northPanel;
 	}
 
-	private void addBorder(JComponent component, String title) {
-		Border etch = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		Border tb = BorderFactory.createTitledBorder(etch, title);
-		component.setBorder(tb);
-	}
-
-
+	
 	private JPanel createCentralPanel() throws IOException {
 		JPanel panel = new JPanel();
 		panel.setOpaque(false);
@@ -191,7 +186,7 @@ public class MainScreen extends JFrame {
 		lblContainerLabel.setBounds((getWidth() - 250) / 2, 20, 250, 150);
 		lblContainerLabel.setLayout(null);
 		panel.add(lblContainerLabel);
-
+		
 		lblTemperature.setFont(new Font("Serif", Font.PLAIN, 50));
         lblTemperature.setForeground(Color.WHITE);
 		lblTemperature.setBounds((getWidth() - 200) / 2, (lblContainerLabel.getHeight() - 100) / 2, 130, 70);
@@ -214,7 +209,8 @@ public class MainScreen extends JFrame {
 		lblWarning.setBounds((getWidth() - 250) / 2, chartPanel.getY() + chartPanel.getHeight(), 250, 30);
 		lblWarning.setBackground(Color.DARK_GRAY);
 		panel.add(lblWarning);
-
+		
+		//Sets the contents of the labels to show the weather for the current day
 		update();
 
 		JButton btnMoreDetails = new JButton("More details >");
@@ -237,20 +233,22 @@ public class MainScreen extends JFrame {
 
 		return panel;
 	}
-
+	
 	private void setUpChart(JFreeChart chart) {
 		XYPlot plot = (XYPlot) chart.getPlot();
 		plot.getRenderer().setSeriesPaint(0, Color.RED);
 		plot.getRenderer().setSeriesPaint(1, Color.blue);
+		
+		//Puts the legent in the bottom left
 		LegendTitle lt = new LegendTitle(plot);
 		lt.setItemFont(new Font("Dialog", Font.PLAIN, 9));
-		lt.setBackgroundPaint(new Color(200, 200, 255, 100));
+		lt.setBackgroundPaint(new Color(200, 200, 255, 200));
 		lt.setFrame(new BlockBorder(Color.white));
 		lt.setPosition(RectangleEdge.BOTTOM);
 		XYTitleAnnotation ta = new XYTitleAnnotation(0.98, 0.02, lt,RectangleAnchor.BOTTOM_RIGHT);
 
 		DateAxis domainAxis = (DateAxis) plot.getDomainAxis(); //x axis
-        DateFormat formatter = new SimpleDateFormat("h a");
+        DateFormat formatter = new SimpleDateFormat("h a"); //Displays the values on the x-axis in the form n am/pm
         domainAxis.setDateFormatOverride(formatter);
 
         ValueAxis rangeAxis = plot.getRangeAxis();
@@ -263,9 +261,10 @@ public class MainScreen extends JFrame {
 		chart.setBackgroundPaint(null);
 		chart.getPlot().setBackgroundPaint(null);
 	}
-
+	
+	//Gets the graph data
 	private XYDataset createDataset() {
-
+		
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 
 		TimeSeries temperature = new TimeSeries("Temperature (°C)");
@@ -275,8 +274,6 @@ public class MainScreen extends JFrame {
 
 
 		Hour h = new Hour(0, new Day(dateToDisplay.getTime()));
-
-		Random r = new Random();
 
 		for (int i = 0; i < 24; i++) {
 			temperature.add(h, graphData.temperature.get(i));
@@ -378,6 +375,7 @@ public class MainScreen extends JFrame {
 
 		Weather.RainEnum rainEnum = requieredWeatherForDay.rainLikelihood;
 		String rainMesage = "";
+		//Updates icon depending on rain level
 		if (rainEnum == RainEnum.HEAVY_SHOWERS) {
 			rainMesage = "Heavy showers likely today";
 			lblContainerLabel.setIcon(new ImageIcon(heavyShowersImage));
@@ -400,11 +398,11 @@ public class MainScreen extends JFrame {
 			lblWarning.setText("No alerts for today");
 		} else if (alerts.size() == 1)  {
 			lblWarning.setIcon(new ImageIcon(alertImage));
-			lblWarning.setText(alerts.get(0).detail);
+			lblWarning.setText(alerts.get(0).name + " " + alerts.get(0).detail);
 
 		} else {
 			lblWarning.setIcon(new ImageIcon(alertImage));
-			lblWarning.setText("<html>" + alerts.get(0).detail + "<br>" + alerts.get(1).detail);
+			lblWarning.setText("<html>" + alerts.get(0).name + " " + alerts.get(0).detail + "<br>" + alerts.get(1).name + " " + alerts.get(1).detail);
 		}
 
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(null, "time", null , createDataset(),  false, true, false );
