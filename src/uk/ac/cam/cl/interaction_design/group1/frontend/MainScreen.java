@@ -357,7 +357,7 @@ public class MainScreen extends JFrame {
 	private void update() {
 		LocationState.setLocation(location);
 		Weather requieredWeatherForDay = WeatherApi.getWeatherForDay(daysAheadOfToday);
-
+		
 		lblTemperature.setText(requieredWeatherForDay.temperature + "°C");
 
 		SimpleDateFormat s = new SimpleDateFormat("EEEE dd MMMM");
