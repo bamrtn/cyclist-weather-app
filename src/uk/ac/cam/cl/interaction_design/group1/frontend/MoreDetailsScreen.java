@@ -56,7 +56,7 @@ public class MoreDetailsScreen extends JFrame{
         String[][] data = {
                 {"Temperature", weather.temperature + "°C"},
                 {"Wind Speed" , weather.windspeed + "km / h"},
-                {"Humidity", weather.humidity + "%"},
+                {"Hours of precipitation", Integer.toString(weather.humidity)},
                 {"Sunrise", weather.sunrise},
                 {"Sunset", weather.sunset}
         };
