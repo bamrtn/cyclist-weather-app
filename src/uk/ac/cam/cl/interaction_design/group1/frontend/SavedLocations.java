@@ -115,7 +115,7 @@ public class SavedLocations extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 del=1;
                 JOptionPane.showMessageDialog(s,
-                        "Click on location to delete!");
+                        "Click on location to delete!","Help",JOptionPane.PLAIN_MESSAGE);
 
 
 
