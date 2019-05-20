@@ -33,6 +33,10 @@ public class WeatherApi {
       Location location = new Location();
       location.name = getString(obj,"EnglishName");
       location.countryCode = getString(get(obj,"Country"),"ID");
+      if (location.countryCode.equals("US") || location.countryCode.equals("JM")){
+        location.countryCode =
+          getString(get(obj,"AdministrativeArea"),"ID") + " (" + location.countryCode + ")";
+      }
       location.locationId = getString(obj,"Key");
       result.add(location);
     }
