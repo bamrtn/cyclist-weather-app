@@ -109,7 +109,12 @@ public class MainScreen extends JFrame {
 	private Image getScaledImage(String filepath, int width, int height) throws IOException {
 		return ImageIO.read(new File(filepath)).getScaledInstance(width, height, Image.SCALE_SMOOTH);
 	}
-
+	
+	private void addBorder(JComponent component, String title) {
+		Border etch = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+		Border tb = BorderFactory.createTitledBorder(etch, title);
+		component.setBorder(tb);
+	}
 
 	private JPanel createNorthPanel() {
 		int componentWidth = this.getWidth() / 4;
@@ -188,9 +193,10 @@ public class MainScreen extends JFrame {
 
 
 		//Container label containing background
-		lblContainerLabel.setBounds((getWidth() - 250) / 2, 20, 250, 150);
+		lblContainerLabel.setBounds((getWidth() - 250) / 2, 20, 280, 150);
 		lblContainerLabel.setLayout(null);
 		panel.add(lblContainerLabel);
+		
 		
 		lblTemperature.setFont(new Font("Serif", Font.PLAIN, 50));
         lblTemperature.setForeground(Color.WHITE);
@@ -201,6 +207,7 @@ public class MainScreen extends JFrame {
 		lblDateAndWind.setBounds(lblTemperature.getX(), lblTemperature.getY() + lblTemperature.getHeight() - 20, 200, 70);
 		lblDateAndWind.setForeground(Color.WHITE);
 		lblContainerLabel.add(lblDateAndWind, BorderLayout.CENTER);
+		
 
 
 		chartPanel.setOpaque(false);
@@ -244,7 +251,7 @@ public class MainScreen extends JFrame {
 		plot.getRenderer().setSeriesPaint(0, Color.RED);
 		plot.getRenderer().setSeriesPaint(1, Color.blue);
 		
-		//Puts the legent in the bottom left
+		//Puts the legend in the bottom left
 		LegendTitle lt = new LegendTitle(plot);
 		lt.setItemFont(new Font("Dialog", Font.PLAIN, 9));
 		lt.setBackgroundPaint(new Color(200, 200, 255, 200));
@@ -253,10 +260,12 @@ public class MainScreen extends JFrame {
 		XYTitleAnnotation ta = new XYTitleAnnotation(0.98, 0.02, lt,RectangleAnchor.BOTTOM_RIGHT);
 
 		DateAxis domainAxis = (DateAxis) plot.getDomainAxis(); //x axis
+		domainAxis.setTickLabelFont(new Font("Arial" , Font.BOLD, 12));
         DateFormat formatter = new SimpleDateFormat("h a"); //Displays the values on the x-axis in the form n am/pm
         domainAxis.setDateFormatOverride(formatter);
 
         ValueAxis rangeAxis = plot.getRangeAxis();
+        rangeAxis.setTickLabelFont(new Font("Arial" , Font.BOLD, 12));
         rangeAxis.setLowerBound(0);
 
 		ta.setMaxWidth(0.4);
@@ -380,6 +389,7 @@ public class MainScreen extends JFrame {
 
 		Weather.RainEnum rainEnum = requieredWeatherForDay.rainLikelihood;
 		String rainMesage = "";
+		
 		//Updates icon depending on rain level
 		if (rainEnum == RainEnum.HEAVY_SHOWERS) {
 			rainMesage = "Heavy showers likely today";
@@ -410,7 +420,7 @@ public class MainScreen extends JFrame {
 			lblWarning.setText("<html>" + alerts.get(0).name + " " + alerts.get(0).detail + "<br>" + alerts.get(1).name + " " + alerts.get(1).detail);
 		}
 
-		JFreeChart chart = ChartFactory.createTimeSeriesChart(null, "time", null , createDataset(),  false, true, false );
+		JFreeChart chart = ChartFactory.createTimeSeriesChart(null, null, null , createDataset(),  false, true, false );
 		setUpChart(chart);
 		chartPanel.setChart(chart);
 	}
