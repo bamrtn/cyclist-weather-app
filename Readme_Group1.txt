@@ -1,7 +1,7 @@
 Cyclist weather app
 ===================
 
-Extract the code and run 
+On macOS and Linux, extract the code and run
 ```
 javac -cp *:.:./*.jar src/uk/ac/cam/cl/interaction_design/group1/**/*.java -d ./bin -encoding iso8859-15
 ```
