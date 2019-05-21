@@ -11,105 +11,118 @@ import org.json.*;
 
 public class WeatherApi {
 
-  private static JSONObject get(JSONObject o,String s){
-    return (JSONObject) o.get(s);
-  }
+	private static JSONObject get(JSONObject o, String s) {
+		return (JSONObject) o.get(s);
+	}
 
-  private static String getString(JSONObject o,String s){
-    return o.get(s).toString();
-  }
+	private static String getString(JSONObject o, String s) {
+		return o.get(s).toString();
+	}
 
-  public static List<Location> searchLocation(String name){
-    List<Location> result = new ArrayList<Location>();
-    String responseString = Request.getRequest(
-      "http://dataservice.accuweather.com/locations/v1/cities/search",
-      new HashMap<String,String>() {{
-        put("q",name);
-      }}
-    );
-    JSONArray response = new JSONArray(responseString);
-    for (Object object : response){
-      JSONObject obj = (JSONObject) object;
-      Location location = new Location();
-      location.name = getString(obj,"EnglishName");
-      location.countryCode = getString(get(obj,"Country"),"ID");
-      if (location.countryCode.equals("US") || location.countryCode.equals("JM")){
-        location.countryCode =
-          getString(get(obj,"AdministrativeArea"),"ID") + " (" + location.countryCode + ")";
-      }
-      location.locationId = getString(obj,"Key");
-      result.add(location);
-    }
-    return result;
-  }
+	public static List<Location> searchLocation(String name) {
+		List<Location> result = new ArrayList<Location>();
+		String responseString = Request.getRequest("http://dataservice.accuweather.com/locations/v1/cities/search",
+				new HashMap<String, String>() {
+					{
+						put("q", name);
+					}
+				});
+		JSONArray response = new JSONArray(responseString);
+		for (Object object : response) {
+			JSONObject obj = (JSONObject) object;
+			Location location = new Location();
+			location.name = getString(obj, "EnglishName");
+			location.countryCode = getString(get(obj, "Country"), "ID");
+			if (location.countryCode.equals("US") || location.countryCode.equals("JM")) {
+				location.countryCode = getString(get(obj, "AdministrativeArea"), "ID") + " (" + location.countryCode
+						+ ")";
+			}
+			location.locationId = getString(obj, "Key");
+			result.add(location);
+		}
+		return result;
+	}
 
-  public static Weather getWeatherForDay(int day){
-    String responseString = Request.getRequest(
-      "http://dataservice.accuweather.com/forecasts/v1/daily/5day/"+LocationState.getCurrentLocation().locationId,
-      new HashMap<String,String>() {{
-        put("details","true");
-        put("metric","true");
-      }}
-    );
-    JSONObject forecast = (JSONObject) ((JSONArray) (new JSONObject(responseString)).get("DailyForecasts")).get(day);
-    Weather result = new Weather();
+	public static Weather getWeatherForDay(int day) {
+		String responseString = Request.getRequest("http://dataservice.accuweather.com/forecasts/v1/daily/5day/"
+				+ LocationState.getCurrentLocation().locationId, new HashMap<String, String>() {
+					{
+						put("details", "true");
+						put("metric", "true");
+					}
+				});
+		JSONObject forecast = (JSONObject) ((JSONArray) (new JSONObject(responseString)).get("DailyForecasts"))
+				.get(day);
+		Weather result = new Weather();
 
-    result.temperature = (int) ((Double.parseDouble(
-        getString(get(get(forecast,"Temperature"),"Minimum"),"Value")
-      ) + Double.parseDouble(
-        getString(get(get(forecast,"Temperature"),"Maximum"),"Value")
-      ))/2.0);
+		result.temperature = (int) ((Double
+				.parseDouble(getString(get(get(forecast, "Temperature"), "Minimum"), "Value"))
+				+ Double.parseDouble(getString(get(get(forecast, "Temperature"), "Maximum"), "Value"))) / 2.0);
 
-    result.windspeed = (int) Double.parseDouble(getString(get(get(get(forecast,"Day"),"Wind"),"Speed"),"Value"));
+		result.windspeed = (int) Double
+				.parseDouble(getString(get(get(get(forecast, "Day"), "Wind"), "Speed"), "Value"));
 
-    int icon = Integer.parseInt(getString(get(forecast,"Day"),"Icon"));
-    if (icon < 8 || (icon > 18 && icon <24)) result.rainLikelihood = Weather.RainEnum.UNLIKELY; else
-    if (icon < 15) result.rainLikelihood = Weather.RainEnum.LIGHT_SHOWERS; else
-    if (icon == 18) result.rainLikelihood = Weather.RainEnum.HEAVY_SHOWERS; else
-                  result.rainLikelihood = Weather.RainEnum.THUNDER;
+		int icon = Integer.parseInt(getString(get(forecast, "Day"), "Icon"));
+		if (icon < 8 || (icon > 18 && icon < 24))
+			result.rainLikelihood = Weather.RainEnum.UNLIKELY;
+		else if (icon < 15)
+			result.rainLikelihood = Weather.RainEnum.LIGHT_SHOWERS;
+		else if (icon == 18)
+			result.rainLikelihood = Weather.RainEnum.HEAVY_SHOWERS;
+		else
+			result.rainLikelihood = Weather.RainEnum.THUNDER;
 
-    if ( Double.parseDouble(getString(get(get(forecast,"Day"),"Rain"),"Value")) > 0.0 )
-      result.alerts.add(new Weather.Alert("Rain expected!","Bring a coat!"));
-    if ( Double.parseDouble(getString(get(get(forecast,"Day"),"Snow"),"Value")) > 0.0 )
-      result.alerts.add(new Weather.Alert("Snow expected!","Cycle with caution!"));
-    if ( Double.parseDouble(getString(get(get(forecast,"Day"),"Ice"),"Value")) > 0.0 )
-      result.alerts.add(new Weather.Alert("Ice expected!","Please don't cycle!"));
+		if (Double.parseDouble(getString(get(get(forecast, "Day"), "Rain"), "Value")) > 0.0)
+			result.alerts.add(new Weather.Alert("Rain expected!", "Bring a coat!"));
+		if (Double.parseDouble(getString(get(get(forecast, "Day"), "Snow"), "Value")) > 0.0)
+			result.alerts.add(new Weather.Alert("Snow expected!", "Cycle with caution!"));
+		if (Double.parseDouble(getString(get(get(forecast, "Day"), "Ice"), "Value")) > 0.0)
+			result.alerts.add(new Weather.Alert("Ice expected!", "Please don't cycle!"));
 
-    result.humidity = (int) (Double.parseDouble(getString(get(forecast,"Day"),"HoursOfPrecipitation")) / 0.12);
+		result.humidity = (int) (Double.parseDouble(getString(get(forecast, "Day"), "HoursOfPrecipitation")) / 0.12);
 
-    result.sunrise = getString(get(forecast,"Sun"),"Rise").substring(11,16);
-    result.sunset = getString(get(forecast,"Sun"),"Set").substring(11,16);
+		result.sunrise = getString(get(forecast, "Sun"), "Rise").substring(11, 16);
+		result.sunset = getString(get(forecast, "Sun"), "Set").substring(11, 16);
 
-    return result;
-  }
+		return result;
+	}
 
-  public static Weather.GraphData getGraphData(int day){
-    Weather w = getWeatherForDay(day);
-    Random rand = new Random(w.temperature*1000+w.windspeed*2000+w.humidity*3000);
-    Weather.GraphData result = new Weather.GraphData();
+	public static Weather.GraphData getGraphData(int day) {
+		Weather w = getWeatherForDay(day);
+		Random rand = new Random(w.temperature * 1000 + w.windspeed * 2000 + w.humidity * 3000);
+		Weather.GraphData result = new Weather.GraphData();
 
-    for (int i = 0; i<24; i++) result.temperature.add(w.temperature-5+rand.nextInt(10));
-    for (int i = 0; i<24; i++) result.windspeed.add(w.windspeed-7+rand.nextInt(14));
-    int rainNum = rand.nextInt(3) + w.humidity/5;
-    if (w.humidity == 0) rainNum = 0;
-    for (int i = 0; i< rainNum; i++) {
-      result.rainTimes.add(Integer.toString(rand.nextInt(24))+":"+rand.nextInt(60));
-    }
+		for (int i = 0; i < 24; i++)
+			result.temperature.add(w.temperature - 5 + rand.nextInt(10));
+		for (int i = 0; i < 24; i++)
+			result.windspeed.add(w.windspeed - 7 + rand.nextInt(14));
+		int rainNum = rand.nextInt(3) + w.humidity / 5;
+		if (w.humidity == 0)
+			rainNum = 0;
+		for (int i = 0; i < rainNum; i++) {
+			String hour = Integer.toString(rand.nextInt(24));
+			while (hour.length() < 2)
+				hour = "0" + hour;
 
-    //System.out.println(result.rainTimes);
+			String minute = Integer.toString(rand.nextInt(24));
+			while (minute.length() < 2)
+				minute = "0" + minute;
 
-    return result;
-  }
+			result.rainTimes.add(hour + ":" + minute);
+		}
 
-  public static String getDate(int day){
-    String[] monthName = {"January", "February",
-                "March", "April", "May", "June", "July",
-                "August", "September", "October", "November",
-                "December"};
+		// System.out.println(result.rainTimes);
 
-    Calendar cal = Calendar.getInstance();
-    cal.add(Calendar.DATE, day);
-    return monthName[cal.get(Calendar.MONTH)] + " " + cal.get(Calendar.DATE);
-  }
+		return result;
+	}
+
+	public static String getDate(int day) {
+		String[] monthName = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+				"October", "November", "December" };
+
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, day);
+		return monthName[cal.get(Calendar.MONTH)] + " " + cal.get(Calendar.DATE);
+	}
 
 }

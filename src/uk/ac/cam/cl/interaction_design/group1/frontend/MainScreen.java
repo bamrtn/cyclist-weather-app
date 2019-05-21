@@ -94,9 +94,14 @@ public class MainScreen extends JFrame {
 		Background contentPane = new Background();
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout());
-
+		
+		//Panel that contains saved location and search location navigation buttons
 		add(createNorthPanel(), BorderLayout.NORTH);
+		
+		//THe main panel
 		add(createCentralPanel(), BorderLayout.CENTER);
+		
+		//Panel that contains next day and previous day buttons
 		add(createSouthPanel(), BorderLayout.SOUTH);
 
 	}
