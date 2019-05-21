@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 public class Cache{
 
+  //Convert JSON Objects to maps from strings to strings
   private static Map<String, String> toMap(JSONObject object) throws JSONException {
       Map<String, String> map = new HashMap<String, String>();
 
@@ -26,6 +27,7 @@ public class Cache{
   private static Cache cache = null;
   private Map<String,String> cachedData;
 
+  //Load cache from file
   public Cache(){
     cachedData = new HashMap<String,String>();
     try{
@@ -39,6 +41,7 @@ public class Cache{
     return cachedData.containsKey(key);
   }
 
+  //Put URL and response into cache and save to file
   public void put(String url, String response){
     cachedData.put(url,response);
     try{
@@ -52,6 +55,7 @@ public class Cache{
     return cachedData.get(key);
   }
 
+  //Singleton
   public static Cache getCache(){
     if (cache == null) cache = new Cache();
     return cache;

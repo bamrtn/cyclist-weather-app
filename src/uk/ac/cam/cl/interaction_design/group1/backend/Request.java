@@ -13,14 +13,16 @@ public class Request {
 
   private static String getUrl(String url){
 
+    //Check if cache contains the URL
     Cache cache = Cache.getCache();
     if (cache.containsKey(url)){
-      //System.out.println("Cached!");
+      //If yes, return the cached response
       return cache.get(url);
     }
 
     String response = "";
             //  if (true) return ""; // COMMENT THIS OUT FOR LIVE REQESTS
+    //Get response through HTTP
     try{
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -37,10 +39,12 @@ public class Request {
 
     }catch(Exception e){}
 
+    //Store response in the cache
     cache.put(url,response);
     return response;
   }
 
+  //Turn request with parameters into URL
   public static String getRequest(String url, Map<String,String> params){
     String suffix = "";
     for (Map.Entry<String, String> param : params.entrySet()){

@@ -8,19 +8,25 @@ public class Location{
   public String name;
   public String countryCode;
   public String locationId;
-  public String toString(){
+  public String toString(){ //For debug
     return name+" "+countryCode+" - "+locationId;
   }
+
+  //Load location from JSON object
   public Location(JSONObject json){
     name = json.get("name").toString();
     countryCode = json.get("countryCode").toString();
     locationId = json.get("locationId").toString();
   }
+
+  //New, empty location
   public Location(){
     name = "";
     countryCode = "";
     locationId = "";
   }
+
+  //Convert location to JSON object for saving
   public JSONObject toJson(){
     JSONObject result = new JSONObject();
     result.put("name",name);

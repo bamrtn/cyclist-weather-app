@@ -16,6 +16,7 @@ public class LocationState{
   private List<Location> savedLocations;
   private Location currentLocation;
 
+  //Load saved locations from file as well as the current location
   public LocationState(){
     savedLocations = new ArrayList<Location>();
     currentLocation = new Location();
@@ -39,6 +40,7 @@ public class LocationState{
     return ls.currentLocation;
   }
 
+  //Add new location to list and save to file
   public static void saveLocation(Location l){
     LocationState ls = getLocationState();
     ls.savedLocations.add(l);
@@ -54,6 +56,7 @@ public class LocationState{
     }catch(Exception e){}
   }
 
+  //Remove saved location from list and save to file
   public static void removeSavedLocation(Location l){
     LocationState ls = getLocationState();
     ls.savedLocations.remove(l);
@@ -69,7 +72,9 @@ public class LocationState{
     }catch(Exception e){}
   }
 
+  //Set the current location and save to file
   public static void setLocation(Location l){
+    //Failsafe is location is empty
     if (l.locationId.equals("")){
       System.out.println("ERROR: Empty location set!");
       return;
@@ -83,6 +88,7 @@ public class LocationState{
     }catch(Exception e){}
   }
 
+  //Singleton
   public static LocationState getLocationState(){
     if (locationState == null) locationState = new LocationState();
     return locationState;
