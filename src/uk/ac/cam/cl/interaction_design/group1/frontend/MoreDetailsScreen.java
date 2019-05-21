@@ -52,20 +52,18 @@ public class MoreDetailsScreen extends JFrame{
         centralPanel.setOpaque(false);
         centralPanel.setLayout(null);
         Weather weather = WeatherApi.getWeatherForDay(day);
-       
-        
+
+
         LocationState.setLocation(this.location);
-        
-        String hoursOfPrecipitation = "";
-        for (String s : WeatherApi.getGraphData(day).rainTimes) {
-        	hoursOfPrecipitation += s + ", ";
-        }
-        
-        hoursOfPrecipitation = hoursOfPrecipitation.substring(0, hoursOfPrecipitation.length() - 2);
-        
-       
+
+        String hoursOfPrecipitation = WeatherApi.getGraphData(day).rainTimes.toString();
+
+        hoursOfPrecipitation = hoursOfPrecipitation.substring(1, hoursOfPrecipitation.length() - 1);
+        if (hoursOfPrecipitation.equals("")) hoursOfPrecipitation = "None";
+
+
         String[][] data = {
-                {"Temperature", weather.temperature + "°C"},
+                {"Temperature", weather.temperature + "ï¿½C"},
                 {"Wind Speed" , weather.windspeed + "km / h"},
                 {"Precipitation times", hoursOfPrecipitation},
                 {"Sunrise", weather.sunrise},
