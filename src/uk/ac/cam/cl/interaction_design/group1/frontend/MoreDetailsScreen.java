@@ -63,7 +63,7 @@ public class MoreDetailsScreen extends JFrame{
 
 
         String[][] data = {
-                {"Temperature", weather.temperature + "ï¿½C"},
+                {"Temperature", weather.temperature + "°C"},
                 {"Wind Speed" , weather.windspeed + "km / h"},
                 {"Precipitation times", hoursOfPrecipitation},
                 {"Sunrise", weather.sunrise},
@@ -97,7 +97,7 @@ public class MoreDetailsScreen extends JFrame{
         for(int x=0;x<2;x++){
             t.getColumnModel().getColumn(x).setCellRenderer( centerRenderer );
         }
-       // addBorder(centralPanel,"central");
+       
         return(centralPanel);
     }
 
