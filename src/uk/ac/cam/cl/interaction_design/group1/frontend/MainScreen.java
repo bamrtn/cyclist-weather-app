@@ -426,6 +426,7 @@ public class MainScreen extends JFrame {
 	}
 
 	public static void main(String[] args) throws IOException {
+		System.out.println("Starting...");
 		MainScreen m = new MainScreen(LocationState.getCurrentLocation());
 		m.setVisible(true);
 	}
